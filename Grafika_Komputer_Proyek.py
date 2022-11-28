@@ -8,7 +8,20 @@ x_body = 0
 y_body = 100
 
 pos_x_tombol = 0
+<<<<<<< HEAD
 pos_y_tombol = 200
+=======
+pos_y_tombol = -200
+
+pos_x_bangun1 = -450
+pos_y_bangun1 = -500
+pos_x_bangun2 = -200
+pos_y_bangun2 = -500
+pos_x_bangun3 = 0
+pos_y_bangun3 = -500
+pos_x_bangun4 = 300
+pos_y_bangun4 = -500
+>>>>>>> 15dbf2bae37e5f21e0b37b0865854a1fe3623621
 
 gameMulai = False
 
@@ -45,6 +58,7 @@ def tombolPlay():
     
 def bodyAir(cx,cy,num_segment):
     glPushMatrix()
+<<<<<<< HEAD
     glScale(1.0,0.3,0)
     global y_body, x_body
     glTranslatef(-1200,1000,0)
@@ -52,6 +66,13 @@ def bodyAir(cx,cy,num_segment):
     x_body += 3
     if x_body == 2400:
         x_body = 0
+=======
+    glScale(0.5,0.5,0)
+    global y_body, x_body
+    glTranslatef(-700,-300,0)
+    glTranslated(x_body, y_body, 0)
+    x_body += 1
+>>>>>>> 15dbf2bae37e5f21e0b37b0865854a1fe3623621
     #Body Pesawat
     glColor3ub(240,240,240)
     # glLineWidth(3)
@@ -62,6 +83,8 @@ def bodyAir(cx,cy,num_segment):
         y = 6 * math.sin(theta)
         glVertex2f(x + cx, y + cy)
     glEnd()
+
+    
     
     #Body Pesawat
     glColor3ub(240,240,240)
@@ -225,7 +248,16 @@ def background():
 def Bangunan():
     #Bangunan 3
     glPushMatrix()
+<<<<<<< HEAD
     glColor3ub(131,128,128)
+=======
+    glColor3ub(117, 108, 106)
+    glTranslated(pos_x_bangun1,pos_y_bangun1,0)
+    # pos_x_bangun1 -= 1
+    if pos_x_bangun1 < -650:
+        pos_x_bangun1 = 600
+
+>>>>>>> 15dbf2bae37e5f21e0b37b0865854a1fe3623621
     glBegin(GL_POLYGON)
     glVertex2f(600,20)#e1
     glVertex2f(600,200)#a3
@@ -421,10 +453,171 @@ def Bangunan():
     glEnd()
     glPopMatrix()
 
+<<<<<<< HEAD
 def gamestart():
     background()
     Matahari(800,300,360)
     Bangunan()
+=======
+def bangunan2():
+    global pos_x_bangun2, pos_y_bangun2
+
+    glPushMatrix()
+    glColor3ub(227, 178, 113)
+    glTranslated(pos_x_bangun2,pos_y_bangun2,0)
+    # pos_x_bangun2 -= 1
+    if pos_x_bangun2 < -650:
+        pos_x_bangun2 = 600
+
+    glBegin(GL_POLYGON)
+    glVertex2f(0,0)
+    glVertex2f(140,0)
+    glVertex2f(140,150)
+    glVertex2f(0,150)
+    glEnd()
+    glColor3ub(77, 76, 73)
+    glBegin(GL_POLYGON)
+    glVertex2f(20,130)
+    glVertex2f(20,100)
+    glVertex2f(50,100)
+    glVertex2f(50,130)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(90,100)
+    glVertex2f(120,100)
+    glVertex2f(120,130)
+    glVertex2f(90,130)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(20,50)
+    glVertex2f(50,50)
+    glVertex2f(50,80)
+    glVertex2f(20,80)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(90,50)
+    glVertex2f(120,50)
+    glVertex2f(120,80)
+    glVertex2f(90,80)
+    glEnd()
+    glPopMatrix()
+
+def bangunan3():
+    global pos_x_bangun3, pos_y_bangun3
+    glPushMatrix()
+    glColor3ub(224, 92, 127)
+    glTranslated(pos_x_bangun3,pos_y_bangun3,0)
+    # pos_x_bangun3 -= 1
+    if pos_x_bangun3 < -650:
+        pos_x_bangun3 = 600
+
+    glBegin(GL_POLYGON)
+    glVertex2f(0,0)
+    glVertex2f(140,0)
+    glVertex2f(140,200)
+    glVertex2f(0,200)
+    glEnd()
+    glColor3ub(77, 76, 73)
+    glBegin(GL_POLYGON)
+    glVertex2f(20,150)
+    glVertex2f(50,150)
+    glVertex2f(50,180)
+    glVertex2f(20,180)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(90,180)
+    glVertex2f(120,180)
+    glVertex2f(120,150)
+    glVertex2f(90,150)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(20,130)
+    glVertex2f(20,100)
+    glVertex2f(50,100)
+    glVertex2f(50,130)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(90,100)
+    glVertex2f(120,100)
+    glVertex2f(120,130)
+    glVertex2f(90,130)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(20,50)
+    glVertex2f(50,50)
+    glVertex2f(50,80)
+    glVertex2f(20,80)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(90,50)
+    glVertex2f(120,50)
+    glVertex2f(120,80)
+    glVertex2f(90,80)
+    glEnd()
+    glPopMatrix()
+
+def bangunan4():
+    global pos_x_bangun4, pos_y_bangun4
+    glPushMatrix()
+    glColor3ub(50, 179, 86)
+    glTranslated(pos_x_bangun4,pos_y_bangun4,0)
+    # pos_x_bangun4 -= 1
+    if pos_x_bangun4 < -650:
+        pos_x_bangun4 = 600
+
+    glBegin(GL_POLYGON)
+    glVertex2f(0,0)
+    glVertex2f(140,0)
+    glVertex2f(140,200)
+    glVertex2f(0,200)
+    glEnd()
+    glColor3ub(77, 76, 73)
+    glBegin(GL_POLYGON)
+    glVertex2f(20,150)
+    glVertex2f(50,150)
+    glVertex2f(50,180)
+    glVertex2f(20,180)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(90,180)
+    glVertex2f(120,180)
+    glVertex2f(120,150)
+    glVertex2f(90,150)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(20,130)
+    glVertex2f(20,100)
+    glVertex2f(50,100)
+    glVertex2f(50,130)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(90,100)
+    glVertex2f(120,100)
+    glVertex2f(120,130)
+    glVertex2f(90,130)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(20,50)
+    glVertex2f(50,50)
+    glVertex2f(50,80)
+    glVertex2f(20,80)
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(90,50)
+    glVertex2f(120,50)
+    glVertex2f(120,80)
+    glVertex2f(90,80)
+    glEnd()
+    glPopMatrix()
+
+
+def gamestart():
+    background()
+    bangunan1()
+    bangunan2()
+    bangunan3()
+    bangunan4()
+>>>>>>> 15dbf2bae37e5f21e0b37b0865854a1fe3623621
     bodyAir(75,11,360)
         
 def display():
