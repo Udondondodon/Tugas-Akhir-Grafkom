@@ -12,13 +12,13 @@ y_body = -100
 pos_x_tombol = 0
 pos_y_tombol = -200
 
-pos_x_bangun1 = 600
+pos_x_bangun1 = -450
 pos_y_bangun1 = -500
-pos_x_bangun2 = 900
+pos_x_bangun2 = -200
 pos_y_bangun2 = -500
-pos_x_bangun3 = 1150
+pos_x_bangun3 = 0
 pos_y_bangun3 = -500
-pos_x_bangun4 = 1400
+pos_x_bangun4 = 300
 pos_y_bangun4 = -500
 
 gameMulai = False
@@ -87,9 +87,10 @@ def tombolPlay(cx,cy,num_seg):
 def bodyAir(cx,cy,num_segment):
     glPushMatrix()
     glScale(0.5,0.5,0)
-    global y_body
+    global y_body, x_body
     glTranslatef(-700,-300,0)
     glTranslated(x_body, y_body, 0)
+    x_body += 1
     #Body Pesawat
     glColor3ub(240,240,240)
     # glLineWidth(3)
@@ -100,6 +101,8 @@ def bodyAir(cx,cy,num_segment):
         y = 6 * math.sin(theta)
         glVertex2f(x + cx, y + cy)
     glEnd()
+
+    
     
     #Body Pesawat
     glColor3ub(240,240,240)
@@ -263,7 +266,7 @@ def bangunan1():
     glPushMatrix()
     glColor3ub(117, 108, 106)
     glTranslated(pos_x_bangun1,pos_y_bangun1,0)
-    pos_x_bangun1 -= 1
+    # pos_x_bangun1 -= 1
     if pos_x_bangun1 < -650:
         pos_x_bangun1 = 600
 
@@ -318,7 +321,7 @@ def bangunan2():
     glPushMatrix()
     glColor3ub(227, 178, 113)
     glTranslated(pos_x_bangun2,pos_y_bangun2,0)
-    pos_x_bangun2 -= 1
+    # pos_x_bangun2 -= 1
     if pos_x_bangun2 < -650:
         pos_x_bangun2 = 600
 
@@ -360,7 +363,7 @@ def bangunan3():
     glPushMatrix()
     glColor3ub(224, 92, 127)
     glTranslated(pos_x_bangun3,pos_y_bangun3,0)
-    pos_x_bangun3 -= 1
+    # pos_x_bangun3 -= 1
     if pos_x_bangun3 < -650:
         pos_x_bangun3 = 600
 
@@ -414,7 +417,7 @@ def bangunan4():
     glPushMatrix()
     glColor3ub(50, 179, 86)
     glTranslated(pos_x_bangun4,pos_y_bangun4,0)
-    pos_x_bangun4 -= 1
+    # pos_x_bangun4 -= 1
     if pos_x_bangun4 < -650:
         pos_x_bangun4 = 600
 
@@ -466,11 +469,11 @@ def bangunan4():
 
 def gamestart():
     background()
-    bodyAir(75,11,360)
     bangunan1()
     bangunan2()
     bangunan3()
     bangunan4()
+    bodyAir(75,11,360)
         
 def display():
     glClear(GL_COLOR_BUFFER_BIT)
@@ -495,13 +498,13 @@ def input_untuk_mouse(button, state, x,y):
 def input_keyboard(key,x,y):
     global y_body
     if key == GLUT_KEY_UP:
-        if y_body == 440:
+        if y_body == 80:
             y_body +=0
         else:
             y_body += 10
             
     elif key == GLUT_KEY_DOWN:
-        if y_body == 60:
+        if y_body == -680:
             y_body -=0
         else:
             y_body -= 10
