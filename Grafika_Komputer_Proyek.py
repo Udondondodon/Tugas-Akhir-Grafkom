@@ -8,8 +8,8 @@ import random as rd
 x_body = -1200
 y_body = 500
 
-xPoint = rd.randrange(100,200)
-yPoint = rd.randrange(80,150)
+xPoint = rd.randrange(-100,200)
+yPoint = rd.randrange(100,170)
 
 pos_x_tombol = 0
 pos_y_tombol = 200
@@ -27,7 +27,7 @@ def Matahari(xn,yn,sugmentyn):
     glBegin(GL_POLYGON)
     for i in range(sugmentyn):
         theta= 2 *3.1415926*i/sugmentyn
-        x = 50* math.cos(theta)
+        x = 180* math.cos(theta)
         y = 50* math.sin(theta)
         glVertex2f(x + xn, y + yn)
     glEnd()
@@ -238,8 +238,9 @@ def point():
     glPushMatrix()
     glTranslated(xPoint,yPoint,0)
     if x_body > xPoint and y_body != yPoint and x_body >=1200:
-        gameMulai = False
-    elif (x_body >= xPoint in range(xPoint-10, xPoint+10)) and (y_body >= yPoint in range(yPoint-2, yPoint+2)):
+        # gameMulai = False
+        x_body = -1200
+    elif xPoint <= x_body and yPoint <= y_body:
         x_body = -1200
     # elif x_body == xPoint and y_body == yPoint:
     #     x_body = -1200
