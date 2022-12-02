@@ -70,8 +70,6 @@ def poin():
     glVertex2f(-1000,55)
     glVertex2f(-1055,55)
     glVertex2f(-1055,0)
-    print(y_poin)
-    print(y_body)
     glEnd()
     glPopMatrix() 
 
@@ -273,16 +271,7 @@ def tombolPlay():
     glVertex2f(621,304)#k2
     glEnd()
     
-    glPopMatrix()
-    
-# def point(x,y):
-#     glPushMatrix()
-#     glPointSize(20)
-#     glBegin(GL_POINTS)
-#     glColor3ub(255,0,47)
-#     glVertex2f(x,y)
-#     glEnd()
-#     glPopMatrix()    
+    glPopMatrix() 
 
 def bodyAir(cx,cy,num_segment):
     glPushMatrix()
@@ -290,9 +279,6 @@ def bodyAir(cx,cy,num_segment):
     global y_body, x_body, kecepatan, game_over
     glTranslatef(-1200,1000,0)
     glTranslated(x_body, y_body, 0)
-    # x_body += 3
-    # if x_body == 2400:
-    #     x_body = 0
         
     #Body Pesawat
     glColor3ub(240,240,240)
