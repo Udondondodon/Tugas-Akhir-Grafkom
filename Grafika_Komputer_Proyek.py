@@ -2,23 +2,28 @@ from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import math
-import random as rd
+import random
 
 #Position awal pesawat
-x_body = -1200
-y_body = 500
-
-xPoint = rd.randrange(-100,200)
-yPoint = rd.randrange(100,170)
+x_body = 0
+y_body = 0
 
 pos_x_tombol = 0
 pos_y_tombol = 200
 
+kecepatan = 5
+
+point = 0
+
+x_poin = 2000
+y_poin = 0
+
 gameMulai = False
+gameOver = False
 
 def init():
     glClearColor(0.0, 0.0, 0.0, 1.0)
-    gluOrtho2D(-1280, 1280, 0, 700,)
+    gluOrtho2D(-1280, 1280, 0, 700)
 
 def Matahari(xn,yn,sugmentyn):
     glPushMatrix()
@@ -33,6 +38,43 @@ def Matahari(xn,yn,sugmentyn):
     glEnd()
     glPopMatrix()
     
+def collision():
+    global x_body, y_body, x_poin, y_poin, gameMulai, kecepatan, point
+    x_body += kecepatan
+    if x_body-300 >= x_poin:
+        if y_body-30 >= y_poin or y_body+30 >= y_poin:
+            x_body = 0
+            y_poin = random.randint(-680,100)
+            point += 1
+    if x_body-70 >= x_poin:
+        if y_body-30 >= y_poin or y_body+30 >= y_poin:
+            x_body = 0
+            y_poin = random.randint(-680,100)
+            point += 1
+    if point == 2:
+        point = 0
+        kecepatan += 1
+    if x_body >= 2400:
+        gameMulai = False
+        x_body = 0
+
+def poin():
+    global x_poin, y_poin
+    glPushMatrix()
+    glScale(1.0,0.3,0)
+    glTranslated(x_poin,y_poin,0)
+    glTranslatef(0,1000,0)
+    glBegin(GL_QUADS)
+    glColor3ub(255,0,47)
+    glVertex2f(-1000,0)
+    glVertex2f(-1000,55)
+    glVertex2f(-1055,55)
+    glVertex2f(-1055,0)
+    print(y_poin)
+    print(y_body)
+    glEnd()
+    glPopMatrix() 
+
 def tombolPlay():
     # global pos_x_tombol, pos_y_tombol
     glPushMatrix()
@@ -233,32 +275,25 @@ def tombolPlay():
     
     glPopMatrix()
     
-def point():
-    global xPoint, yPoint, x_body, gameMulai
-    glPushMatrix()
-    glTranslated(xPoint,yPoint,0)
-    if x_body > xPoint and y_body != yPoint and x_body >=1200:
-        # gameMulai = False
-        x_body = -1200
-    elif xPoint <= x_body and yPoint <= y_body:
-        x_body = -1200
-    # elif x_body == xPoint and y_body == yPoint:
-    #     x_body = -1200
-    glPointSize(20)
-    glBegin(GL_POINTS)
-    glColor3ub(255,0,47)
-    glVertex2f(xPoint,yPoint)
-    glEnd()
-    glPopMatrix()    
+# def point(x,y):
+#     glPushMatrix()
+#     glPointSize(20)
+#     glBegin(GL_POINTS)
+#     glColor3ub(255,0,47)
+#     glVertex2f(x,y)
+#     glEnd()
+#     glPopMatrix()    
 
 def bodyAir(cx,cy,num_segment):
     glPushMatrix()
     glScale(1.0,0.3,0)
-    global y_body, x_body, xPoint, yPoint, gameMulai
+    global y_body, x_body, kecepatan, game_over
+    glTranslatef(-1200,1000,0)
     glTranslated(x_body, y_body, 0)
-    x_body += 5
-    # if x_body >= 1200:
-    #     x_body = -1200
+    # x_body += 3
+    # if x_body == 2400:
+    #     x_body = 0
+        
     #Body Pesawat
     glColor3ub(240,240,240)
     # glLineWidth(3)
@@ -422,7 +457,7 @@ def background():
     glVertex2f(-1280,0)
     glVertex2f(-1280,700)
     glVertex2f(1280,700)
-    glVertex2f(1280,0)
+    glVertex2f(1280,-0)
     glEnd()
     glPopMatrix()
 
@@ -628,13 +663,15 @@ def Bangunan():
 def gamestart():
     background()
     Matahari(800,300,360)
-    point()
     Bangunan()
+    poin()
     bodyAir(75,11,360)
+    collision()
     
 def display():
     glClear(GL_COLOR_BUFFER_BIT)
     glColor3f(1.0,1.0,1.)
+    # glOrtho(-1280, 1280, 0, 700, 0.0, 1.0)
     glViewport(0, 0, 1280, 1280)
     
     if gameMulai == True:
@@ -655,13 +692,13 @@ def input_keyboard(key,x,y):
         if y_body == 80:
             y_body +=0
         else:
-            y_body += 10
+            y_body += 15
             
     elif key == GLUT_KEY_DOWN:
         if y_body == -680:
             y_body -=0
         else:
-            y_body -= 10
+            y_body -= 15
 
 def update(value):
     glutPostRedisplay()
