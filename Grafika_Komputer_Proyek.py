@@ -57,6 +57,7 @@ def collision():
     if x_body >= 2400:
         gameMulai = False
         x_body = 0
+        kecepatan = 5
 
 def poin():
     global x_poin, y_poin
