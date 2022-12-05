@@ -1,24 +1,31 @@
+import OpenGL.GLUT as glut
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import math
-import random as rd
+import random
 
 #Position awal pesawat
-x_body = -1200
-y_body = 500
-
-xPoint = rd.randrange(-100,200)
-yPoint = rd.randrange(100,170)
+x_body = 0
+y_body = 0
 
 pos_x_tombol = 0
 pos_y_tombol = 200
 
+tingkatLevel = 1
+kecepatan = 5
+
+point = 0
+
+x_poin = 2000
+y_poin = 0
+
 gameMulai = False
+gameOver = False
 
 def init():
     glClearColor(0.0, 0.0, 0.0, 1.0)
-    gluOrtho2D(-1280, 1280, 0, 700,)
+    gluOrtho2D(-1280, 1280, 0, 700)
 
 def Matahari(xn,yn,sugmentyn):
     glPushMatrix()
@@ -33,6 +40,55 @@ def Matahari(xn,yn,sugmentyn):
     glEnd()
     glPopMatrix()
     
+def drawText(text,xpos,ypos,r,g,b):
+    glPushMatrix()
+    glColor3ub(r,g,b)
+    fontStyle = glut.GLUT_BITMAP_TIMES_ROMAN_24
+    glRasterPos2i(xpos,ypos)
+    for i in str(text):
+        c = ord(i)
+        glutBitmapCharacter(fontStyle, c)
+    glPopMatrix()
+    
+def collision():
+    global x_body, y_body, x_poin, y_poin, gameMulai, kecepatan, point, tingkatLevel
+    x_body += kecepatan
+    if x_body-300 >= x_poin:
+        if y_body+40 >= y_poin >= y_body-40:
+            x_body = 0
+            y_poin = random.randint(-680,100)
+            point += 1
+    if x_body-70 >= x_poin:
+        if y_body+40 >= y_poin >= y_body-40:
+            x_body = 0
+            y_poin = random.randint(-680,100)
+            point += 1
+    if point == 2:
+        point = 0
+        kecepatan += 1
+        tingkatLevel +=1
+        
+    if x_body >= 2400:
+        gameMulai = False
+        x_body = 0
+        kecepatan = 5
+        tingkatLevel = 1
+
+def poin():
+    global x_poin, y_poin
+    glPushMatrix()
+    glScale(1.0,0.3,0)
+    glTranslated(x_poin,y_poin,0)
+    glTranslatef(0,1000,0)
+    glBegin(GL_QUADS)
+    glColor3ub(255,0,47)
+    glVertex2f(-1000,0)
+    glVertex2f(-1000,55)
+    glVertex2f(-1055,55)
+    glVertex2f(-1055,0)
+    glEnd()
+    glPopMatrix() 
+
 def tombolPlay():
     # global pos_x_tombol, pos_y_tombol
     glPushMatrix()
@@ -231,34 +287,15 @@ def tombolPlay():
     glVertex2f(621,304)#k2
     glEnd()
     
-    glPopMatrix()
-    
-def point():
-    global xPoint, yPoint, x_body, gameMulai
-    glPushMatrix()
-    glTranslated(xPoint,yPoint,0)
-    if x_body > xPoint and y_body != yPoint and x_body >=1200:
-        # gameMulai = False
-        x_body = -1200
-    elif xPoint <= x_body and yPoint <= y_body:
-        x_body = -1200
-    # elif x_body == xPoint and y_body == yPoint:
-    #     x_body = -1200
-    glPointSize(20)
-    glBegin(GL_POINTS)
-    glColor3ub(255,0,47)
-    glVertex2f(xPoint,yPoint)
-    glEnd()
-    glPopMatrix()    
+    glPopMatrix() 
 
 def bodyAir(cx,cy,num_segment):
     glPushMatrix()
     glScale(1.0,0.3,0)
-    global y_body, x_body, xPoint, yPoint, gameMulai
+    global y_body, x_body, kecepatan, game_over
+    glTranslatef(-1200,1000,0)
     glTranslated(x_body, y_body, 0)
-    x_body += 5
-    # if x_body >= 1200:
-    #     x_body = -1200
+        
     #Body Pesawat
     glColor3ub(240,240,240)
     # glLineWidth(3)
@@ -422,7 +459,7 @@ def background():
     glVertex2f(-1280,0)
     glVertex2f(-1280,700)
     glVertex2f(1280,700)
-    glVertex2f(1280,0)
+    glVertex2f(1280,-0)
     glEnd()
     glPopMatrix()
 
@@ -532,24 +569,16 @@ def Bangunan():
     #Cendela
     glColor3ub(217,217,217)
     glBegin(GL_POLYGON)
-    glVertex2f(-1150,80)#i3
     glVertex2f(-1150,90)#h3
+    glVertex2f(-1150,40)#i3
+    glVertex2f(-1100,40)#j3
     glVertex2f(-1100,90)#k3
-    glVertex2f(-1100,80)#j3
     glEnd()
-    glColor3ub(217,217,217)
     glBegin(GL_POLYGON)
-    glVertex2f(-1150,60)#m3
-    glVertex2f(-1150,70)#l3
-    glVertex2f(-1100,70)#o3
-    glVertex2f(-1100,60)#n3
-    glEnd()
-    glColor3ub(217,217,217)
-    glBegin(GL_POLYGON)
-    glVertex2f(-1150,40)#q3
-    glVertex2f(-1150,50)#p3
-    glVertex2f(-1100,50)#s3
-    glVertex2f(-1100,40)#r3
+    glVertex2f(-1050,90)#l3
+    glVertex2f(-1050,40)#m3
+    glVertex2f(-1000,40)#n3
+    glVertex2f(-1000,90)#o3
     glEnd()
     glBegin(GL_POLYGON)
     glVertex2f(-750,130)#t3
@@ -574,6 +603,84 @@ def Bangunan():
     glVertex2f(-550,80)#i4
     glVertex2f(-550,40)#k4
     glVertex2f(-600,40)#j4
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(-400,80)#l4
+    glVertex2f(-350,80)#m4
+    glVertex2f(-350,40)#n4
+    glVertex2f(-400,40)#o4
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(-250,80)#p4
+    glVertex2f(-200,80)#q4
+    glVertex2f(-200,40)#r4
+    glVertex2f(-250,40)#s4
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(-50,180)#t4
+    glVertex2f(0,180)#u4
+    glVertex2f(0,140)#v4
+    glVertex2f(-50,140)#w4
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(100,180)#z4
+    glVertex2f(150,180)#c5
+    glVertex2f(150,140)#b5
+    glVertex2f(100,140)#a5
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(-50,120)#d5
+    glVertex2f(0,120)#e5
+    glVertex2f(0,60)#f5
+    glVertex2f(-50,60)#g5
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(100,120)#h5
+    glVertex2f(150,120)#i5
+    glVertex2f(150,60)#j5
+    glVertex2f(100,60)#k5
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(300,140)#l5
+    glVertex2f(300,100)#m5
+    glVertex2f(350,100)#n5
+    glVertex2f(350,140)#o5
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(420,140)#p5
+    glVertex2f(420,100)#q5
+    glVertex2f(520,100)#r5
+    glVertex2f(520,140)#s5
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(420,80)#t5
+    glVertex2f(420,40)#u5
+    glVertex2f(520,40)#v5
+    glVertex2f(520,80)#w5
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(650,100)#z5
+    glVertex2f(650,40)#a6
+    glVertex2f(700,40)#b6
+    glVertex2f(700,100)#c6
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(750,100)#d6
+    glVertex2f(750,40)#e6
+    glVertex2f(850,40)#f6
+    glVertex2f(850,100)#g6
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(1300,140)#h6
+    glVertex2f(1200,140)#i6
+    glVertex2f(1200,100)#j6
+    glVertex2f(1300,100)#k6
+    glEnd()
+    glBegin(GL_POLYGON)
+    glVertex2f(1300,80)#l6
+    glVertex2f(1200,80)#m6
+    glVertex2f(1200,40)#n6
+    glVertex2f(1300,40)#o6
     glEnd()
     #pohon - kayu1
     glColor3ub(97,60,17)
@@ -628,17 +735,20 @@ def Bangunan():
 def gamestart():
     background()
     Matahari(800,300,360)
-    point()
     Bangunan()
+    poin()
     bodyAir(75,11,360)
+    collision()
     
 def display():
     glClear(GL_COLOR_BUFFER_BIT)
     glColor3f(1.0,1.0,1.)
+    # glOrtho(-1280, 1280, 0, 700, 0.0, 1.0)
     glViewport(0, 0, 1280, 1280)
     
     if gameMulai == True:
         gamestart()
+        drawText('LEVEL : ' + str(tingkatLevel), -1150 ,350, 0,0,0)
     else:
         tombolPlay()
     glFlush()
@@ -652,16 +762,16 @@ def input_untuk_mouse(button, state, x,y):
 def input_keyboard(key,x,y):
     global y_body
     if key == GLUT_KEY_UP:
-        if y_body == 80:
+        if y_body >= 195:
             y_body +=0
         else:
-            y_body += 10
+            y_body += 15
             
     elif key == GLUT_KEY_DOWN:
-        if y_body == -680:
+        if y_body <= -680:
             y_body -=0
         else:
-            y_body -= 10
+            y_body -= 15
 
 def update(value):
     glutPostRedisplay()
