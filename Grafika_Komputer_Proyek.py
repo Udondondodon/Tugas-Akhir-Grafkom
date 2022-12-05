@@ -55,7 +55,7 @@ def collision():
     x_body += kecepatan
 
 def collision():
-    global x_body, y_body, x_poin, y_poin, gameMulai, kecepatan, point
+    global x_body, y_body, x_poin, y_poin, gameMulai, kecepatan, point, tingkatLevel
     x_body += kecepatan
     print(y_body, y_poin)
     
@@ -69,6 +69,7 @@ def collision():
             x_body = 0
             y_poin = random.randint(-680,100)
             point += 1
+            
     if point == 2:
         point = 0
         kecepatan += 1
