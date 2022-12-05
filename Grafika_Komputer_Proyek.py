@@ -53,6 +53,12 @@ def drawText(text,xpos,ypos,r,g,b):
 def collision():
     global x_body, y_body, x_poin, y_poin, gameMulai, kecepatan, point, tingkatLevel
     x_body += kecepatan
+
+def collision():
+    global x_body, y_body, x_poin, y_poin, gameMulai, kecepatan, point
+    x_body += kecepatan
+    print(y_body, y_poin)
+    
     if x_body-300 >= x_poin:
         if y_body+40 >= y_poin >= y_body-40:
             x_body = 0
@@ -67,7 +73,7 @@ def collision():
         point = 0
         kecepatan += 1
         tingkatLevel +=1
-        
+
     if x_body >= 2400:
         gameMulai = False
         x_body = 0
@@ -785,7 +791,6 @@ def main():
     glutCreateWindow("Game Pesawat")
     glutDisplayFunc(display)
     glutSpecialFunc(input_keyboard)
-    # glutSpecialFunc(positionPesawat)
     glutMouseFunc(input_untuk_mouse)
     glutTimerFunc(1,update,0)
     init()
