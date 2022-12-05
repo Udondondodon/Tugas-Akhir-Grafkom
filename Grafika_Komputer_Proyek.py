@@ -29,7 +29,6 @@ def init():
 
 def Matahari(xn,yn,sugmentyn):
     glPushMatrix()
-    # glScale(0.5,0.5,0)
     glColor3ub(255,230,0)
     glBegin(GL_POLYGON)
     for i in range(sugmentyn):
@@ -93,16 +92,9 @@ def poin():
     glPopMatrix() 
 
 def tombolPlay():
-    # global pos_x_tombol, pos_y_tombol
     glPushMatrix()
     glColor3ub(41, 184, 255)
     glTranslated(0,-50,0)
-    
-    # glBegin(GL_POLYGON)
-    # glVertex2f(-100,50)
-    # glVertex2f(-100,0)
-    # glVertex2f(100,0)
-    # glVertex2f(100,50)
     
     #kotakBelakang
     glBegin(GL_POLYGON)
@@ -113,7 +105,6 @@ def tombolPlay():
     glEnd()
     
     #Huruf S
-    # glColor3ub(0,0,0)
     glColor3ub(255,255,255)
     glBegin(GL_POLYGON)
     glVertex2f(-616,193)#g
@@ -121,7 +112,6 @@ def tombolPlay():
     glVertex2f(-372,220)#e
     glVertex2f(-300,200)#h
     glEnd()
-    # glColor3ub(0,0,0)
     glColor3ub(255,255,255)
     glBegin(GL_POLYGON)
     glVertex2f(-372,220)#e
@@ -129,7 +119,6 @@ def tombolPlay():
     glVertex2f(-309,262)#i
     glVertex2f(-376,244)#d
     glEnd()
-    # glColor3ub(0,0,0)
     glColor3ub(255,255,255)
     glBegin(GL_POLYGON)
     glVertex2f(-572,241)#c
@@ -137,7 +126,6 @@ def tombolPlay():
     glVertex2f(-309,262)#i
     glVertex2f(-505,260)#j
     glEnd()
-    # glColor3ub(0,0,0)
     glColor3ub(255,255,255)
     glBegin(GL_POLYGON)
     glVertex2f(-572,241)#c
@@ -146,7 +134,6 @@ def tombolPlay():
     glVertex2f(-548,297)#a
     glVertex2f(-597,277)#b
     glEnd()
-    # glColor3ub(0,0,0)
     glColor3ub(255,255,255)
     glBegin(GL_POLYGON)
     glVertex2f(-548,297)#a
@@ -290,6 +277,9 @@ def tombolPlay():
     glVertex2f(621,304)#k2
     glEnd()
     
+    drawText('Tekan Enter Untuk Bermain Game', -320 ,150, 255,255,255)
+    drawText('"Space Air Plane"', -160 ,120, 255,255,255)
+    
     glPopMatrix() 
 
 def bodyAir(cx,cy,num_segment):
@@ -301,7 +291,6 @@ def bodyAir(cx,cy,num_segment):
         
     #Body Pesawat
     glColor3ub(240,240,240)
-    # glLineWidth(3)
     glBegin(GL_POLYGON)
     for i in range(num_segment):
         theta= 2 *3.1415926*i/num_segment
@@ -746,7 +735,6 @@ def gamestart():
 def display():
     glClear(GL_COLOR_BUFFER_BIT)
     glColor3f(1.0,1.0,1.)
-    # glOrtho(-1280, 1280, 0, 700, 0.0, 1.0)
     glViewport(0, 0, 1280, 1280)
     
     if gameMulai == True:
@@ -760,6 +748,11 @@ def input_untuk_mouse(button, state, x,y):
     global pos_x_tombol, gameMulai
 
     if button == GLUT_LEFT_BUTTON:
+        gameMulai = True
+        
+def input_enter(key, x,y):
+    global gameMulai
+    if key == b'\r':
         gameMulai = True
     
 def input_keyboard(key,x,y):
@@ -788,6 +781,7 @@ def main():
     glutCreateWindow("Game Pesawat")
     glutDisplayFunc(display)
     glutSpecialFunc(input_keyboard)
+    glutKeyboardFunc(input_enter)
     glutMouseFunc(input_untuk_mouse)
     glutTimerFunc(1,update,0)
     init()
