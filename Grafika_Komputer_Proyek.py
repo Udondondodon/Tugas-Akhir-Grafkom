@@ -41,13 +41,14 @@ def Matahari(xn,yn,sugmentyn):
 def collision():
     global x_body, y_body, x_poin, y_poin, gameMulai, kecepatan, point
     x_body += kecepatan
+    print(y_body, y_poin)
     if x_body-300 >= x_poin:
-        if y_body-30 >= y_poin or y_body+30 >= y_poin:
+        if y_body+40 >= y_poin >= y_body-40:
             x_body = 0
             y_poin = random.randint(-680,100)
             point += 1
     if x_body-70 >= x_poin:
-        if y_body-30 >= y_poin or y_body+30 >= y_poin:
+        if y_body+40 >= y_poin >= y_body-40:
             x_body = 0
             y_poin = random.randint(-680,100)
             point += 1
@@ -676,13 +677,13 @@ def input_untuk_mouse(button, state, x,y):
 def input_keyboard(key,x,y):
     global y_body
     if key == GLUT_KEY_UP:
-        if y_body == 80:
+        if y_body >= 195:
             y_body +=0
         else:
             y_body += 15
             
     elif key == GLUT_KEY_DOWN:
-        if y_body == -680:
+        if y_body <= -680:
             y_body -=0
         else:
             y_body -= 15
