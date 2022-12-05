@@ -49,10 +49,6 @@ def drawText(text,xpos,ypos,r,g,b):
         c = ord(i)
         glutBitmapCharacter(fontStyle, c)
     glPopMatrix()
-    
-def collision():
-    global x_body, y_body, x_poin, y_poin, gameMulai, kecepatan, point, tingkatLevel
-    x_body += kecepatan
 
 def collision():
     global x_body, y_body, x_poin, y_poin, gameMulai, kecepatan, point, tingkatLevel
